@@ -45,6 +45,9 @@ networks:
 ## Crear un stack de servicios gestionados por doker-compose.
 
 ### Paso 1. Instalar docker-compose.
+
+> **No es necesario si vamos a trabajar con el playground de docker**
+
 Descarga el paquete
 <br/>
 ```curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose```
@@ -62,7 +65,18 @@ Añádelo al PATH mediante un enlace simbólico
 > Si todo ha ido bien, se mostrará la versión instalada de docker-compose.
 <br/>
 
-### Paso 2. Definir la configuración del servicio de frontend.
+### Paso 2. Creación de directorio de trabajo.
+Cramos una carpeta en el directorio de root
+```
+mkdir docker-compose
+```
+### Paso 3. Creación de fichero docker-compose.yaml.
+Creamos un fichero docker-compose.yaml usando tu editor de texto favorito.
+```
+vi docker-compose.yaml
+```
+
+### Paso 4. Definir la configuración del servicio de frontend.
 Para definir la configuración del servicio de frontend, debemos tener en cuenta los siguientes puntos:
 <br/>
 - Nombre del contenedor
@@ -77,7 +91,7 @@ frontend:
     ports:
       - 80:80
 ```
-### Paso 3. Definir la configuración del servicio de backend.
+### Paso 5. Definir la configuración del servicio de backend.
 Para definir la configuración del servicio de backend, debemos tener en cuenta los siguientes puntos:
 <br/>
 - Nombre del contenedor
@@ -92,7 +106,7 @@ Para definir la configuración del servicio de backend, debemos tener en cuenta 
     ports:
       - 8080:8080
 ```
-### Paso 4. Definir la configuración del servicio de persistencia.
+### Paso 6. Definir la configuración del servicio de persistencia.
 Para definir la configuración del servicio de persistencia, debemos tener en cuenta los siguientes puntos:
 <br/>
 - Nombre del contenedor
@@ -112,7 +126,7 @@ Para definir la configuración del servicio de persistencia, debemos tener en cu
         source: postgres-data
         target: /var/lib/postgresql/data
 ```
-### Paso 5. Definir el fichero YAML completo.
+### Paso 7. Definir el fichero YAML completo.
 Ahora que tenemos la configuración de los tres servicios, ya podemos definir el docker-compose completo. Guarda fichero como "docker-compose.yml".
 ```
 version: '3.2'
@@ -144,7 +158,7 @@ volumes:
     external: true
 ```
 > **Recuerda definir el recurso de volúmenes**
-### Paso 6. Levantar el stack de recursos.
+### Paso 8. Levantar el stack de recursos.
 Para levantar el stack de recursos definido anteriormente, ejecuta el siguiente comando en la ruta donde tengas el fichero docker-compsoe:
 <br/>
 ```docker-compose up -d```
@@ -160,6 +174,7 @@ Creating db       ... done
 Creating backend  ... done
 Creating frontend ... done
 ```
+### Paso 9. Comprobamos el estado de los servicios.
 Como puedes ver en e log, docker-compose se ha encargado de crear una nueva red para levantar nuestros servicios (docker-compose_default). Es por esto, que todos los servicios que esten en esa red podrán descubrirse mediante hostname.
 Al igual que en los casos anteriores, podemos conocer el estado de los servicios mediante los siguientes comandos:
 
@@ -180,6 +195,7 @@ CONTAINER ID        IMAGE                      COMMAND                  CREATED 
 d5cf55d4bd10        helloworld:latest          "nginx -g 'daemon of…"   8 minutes ago       Up 8 minutes        0.0.0.0:80->80/tcp       frontend
 b13347584877        postgres:latest            "docker-entrypoint.s…"   8 minutes ago       Up 8 minutes        0.0.0.0:5432->5432/tcp   db
 ```
+### Paso 9. Comprobamos el mapeo del volumen persistente.
 Si utilizamos el comando "docker inspect" podemos observar como nuestra base de datos tiene un volumen mapeado al directorio del volumen persistente que preparamos en el lab04:
 
 ```
