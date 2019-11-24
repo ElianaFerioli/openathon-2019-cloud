@@ -65,66 +65,90 @@ Añádelo al PATH mediante un enlace simbólico
 ### Paso 2. Definir la configuración del servicio de frontend.
 Para definir la configuración del servicio de frontend, debemos tener en cuenta los siguientes puntos:
 <br/>
+- Nombre del contenedor
+- Hostname
 - Nombre de la imagen
 - Puerto que expone
 ```
-my-frontend:
+frontend:
+    container_name: frontend
+    hostname: frontend
     image: helloworld:latest
     ports:
-      - "8080:80"
+      - 80:80
 ```
 ### Paso 3. Definir la configuración del servicio de backend.
 Para definir la configuración del servicio de backend, debemos tener en cuenta los siguientes puntos:
 <br/>
+- Nombre del contenedor
+- Hostname
 - Nombre de la imagen
 - Puerto que expone
 ```
-my-backend:
-    image: ...
+ backend:
+    container_name: backend
+    hostname: backend
+    image: josdev27/spring_boot_app
     ports:
-      - "...."
+      - 8080:8080
 ```
 ### Paso 4. Definir la configuración del servicio de persistencia.
 Para definir la configuración del servicio de persistencia, debemos tener en cuenta los siguientes puntos:
 <br/>
+- Nombre del contenedor
+- Hostname
 - Nombre de la imagen
 - Puerto que expone
-- Mapeo del volumen de persistencia de datos
+- Mapeo del volumen de persistencia de datos indicando el tipo de volumen, el nombre y el target.
 ```
-db:
-    image: ...
+ db:
+    container_name: db
+    hostname: db
+    image: postgres:latest
     ports:
-      - "...."
+      - 5432:5432
     volumes:
-      - my-volume:/.../...
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
 ```
 ### Paso 5. Definir el fichero YAML completo.
 Ahora que tenemos la configuración de los tres servicios, ya podemos definir el docker-compose completo. Guarda fichero como "docker-compose.yml".
 ```
-version: '3'
+version: '3.2'
 services:
-  my-frontend:
-      image: helloworld:latest
-      ports:
-        - "8080:80"
-  my-backend:
-      image: ...
-      ports:
-        - "...."
-  db:
-      image: ...
-      ports:
-        - "...."
-      volumes:
-        - my-volume:/.../...
+ my-frontend:
+    container_name: frontend
+    hostname: frontend
+    image: helloworld:latest
+    ports:
+      - 80:80
+ my-backend:
+    container_name: backend
+    hostname: backend
+    image: josdev27/spring_boot_app
+    ports:
+      - 8080:8080
+ db:
+    container_name: db
+    hostname: db
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
 volumes:
-  - my-volume:
+  postgres-data:
+    external: true
 ```
 > **Recuerda definir el recurso de volúmenes**
 ### Paso 6. Levantar el stack de recursos.
 Para levantar el stack de recursos definido anteriormente, ejecuta el siguiente comando en la ruta donde tengas el fichero docker-compsoe:
 <br/>
-```docker-compose up```
+```docker-compose up -d```
+> **Utilizamos el flag "-d" para levantar el stack en modo detached. Si falla, lo mejor será quitar el flag para ver los logs de arranque.**
 <br/>
 Puedes comprobar en el log si todo ha ido bien.
 
