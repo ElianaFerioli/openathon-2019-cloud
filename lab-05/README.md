@@ -150,5 +150,6 @@ Para levantar el stack de recursos definido anteriormente, ejecuta el siguiente 
 ```docker-compose up -d```
 > **Utilizamos el flag "-d" para levantar el stack en modo detached. Si falla, lo mejor será quitar el flag para ver los logs de arranque.**
 <br/>
-Puedes comprobar en el log si todo ha ido bien.
+docker-compose irá informando a medida que los diferentes servicios esten levantados.
+
 
