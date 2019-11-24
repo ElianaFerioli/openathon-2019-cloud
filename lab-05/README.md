@@ -152,4 +152,12 @@ Para levantar el stack de recursos definido anteriormente, ejecuta el siguiente 
 <br/>
 docker-compose irá informando a medida que los diferentes servicios esten levantados.
 
+```
+[node1] (local) root@192.168.0.33 ~/docker-compose
+$ docker-compose up -d
+Creating network "docker-compose_default" with the default driver
+Creating db       ... done
+Creating backend  ... done
+Creating frontend ... done
+```
 
