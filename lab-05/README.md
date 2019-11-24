@@ -160,4 +160,44 @@ Creating db       ... done
 Creating backend  ... done
 Creating frontend ... done
 ```
+Como puedes ver en e log, docker-compose se ha encargado de crear una nueva red para levantar nuestros servicios (docker-compose_default). Es por esto, que todos los servicios que esten en esa red podrán descubrirse mediante hostname.
+Al igual que en los casos anteriores, podemos conocer el estado de los servicios mediante los siguientes comandos:
+
+```
+[node1] (local) root@192.168.0.33 ~/docker-compose
+$ docker-compose ps
+  Name                Command              State           Ports         
+-------------------------------------------------------------------------
+backend    java -jar demo.jar              Up      0.0.0.0:8080->8080/tcp
+db         docker-entrypoint.sh postgres   Up      0.0.0.0:5432->5432/tcp
+frontend   nginx -g daemon off;            Up      0.0.0.0:80->80/tcp    
+```
+```
+[node1] (local) root@192.168.0.33 ~/docker-compose
+$ docker ps
+CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS                    NAMES
+7d1f619c3b09        josdev27/spring_boot_app   "java -jar demo.jar"     8 minutes ago       Up 8 minutes        0.0.0.0:8080->8080/tcp   backend
+d5cf55d4bd10        helloworld:latest          "nginx -g 'daemon of…"   8 minutes ago       Up 8 minutes        0.0.0.0:80->80/tcp       frontend
+b13347584877        postgres:latest            "docker-entrypoint.s…"   8 minutes ago       Up 8 minutes        0.0.0.0:5432->5432/tcp   db
+```
+Si utilizamos el comando "docker inspect" podemos observar como nuestra base de datos tiene un volumen mapeado al directorio del volumen persistente que preparamos en el lab04:
+
+```
+docker inspect db
+```
+
+```
+"Mounts": [
+            {
+                "Type": "volume",
+                "Name": "postgres-data",
+                "Source": "/var/lib/docker/volumes/postgres-data/_data",
+                "Destination": "/var/lib/postgresql/data",
+                "Driver": "local",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": ""
+            }
+        ]
+```
 
