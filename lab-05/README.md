@@ -8,7 +8,12 @@
 
 ## Objetivos y resultados
 El objetivo de este laboratorio es crear una stack de servicios, es decir, definiciones en un archivo de texto en formato YAML de múltiples servicios además de volúmenes y redes orquestados por **docker-compose**. Para ello, aprovecharemos la imágenes Docker que hemos generado en los laboratiorios anteriores. Como resultado, obtendremos un fichero YAML con toda la configuración necesaria para levantar nuestro stack con un solo comando.
+<p align="center">
+<img src="../resources/docker-compose-diagram.png">
 <br/>
+</p>
+<br/>
+
 ## ¿Qué es docker-compose?
 Se trata de una herramienta ideal para ejecutar **stacks** de aplicaciones contenerizadas. Por ejemplo, un conjunto de servicios que requieren ser orquestados de forma conjunta. Un caso típico es una aplicación compuesta de un front-end, un back-end y una capa de persistencia. Mediante una definición YAML, se configuran todos los servicios implicados en el stack y, mediante un único comando, permite desplegar el stack completo de servicios.
 <br/>
@@ -44,7 +49,7 @@ networks:
 
 ### Paso 1. Instalar docker-compose.
 
-> **No es necesario si vamos a trabajar con el playground de docker**
+> **No es necesario si vamos a trabajar con Play With Docker**
 
 Descarga el paquete
 <br/>
@@ -193,7 +198,7 @@ CONTAINER ID        IMAGE                      COMMAND                  CREATED 
 d5cf55d4bd10        helloworld:latest          "nginx -g 'daemon of…"   8 minutes ago       Up 8 minutes        0.0.0.0:80->80/tcp       frontend
 b13347584877        postgres:latest            "docker-entrypoint.s…"   8 minutes ago       Up 8 minutes        0.0.0.0:5432->5432/tcp   db
 ```
-### Paso 9. Comprobamos el mapeo del volumen persistente.
+### Paso 10. Comprobamos el mapeo del volumen persistente.
 Si utilizamos el comando "docker inspect" podemos observar como nuestra base de datos tiene un volumen mapeado al directorio del volumen persistente que preparamos en el lab04:
 
 ```
