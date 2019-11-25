@@ -46,6 +46,28 @@ networks:
    my-stack-network:
 ```
 ## Crear un stack de servicios gestionados por doker-compose.
+> Antes de empezar este laboratorio, debemos asegurarnos que los contenedores no estan corriendo ya que al levantar los servicios del stack, podemos encontrarnos con un conflicto de puertos. Para ello, podemos ejecutar el siguiente comando:
+
+```
+# Este comando nos devuelve una lista de los contenedores independientemente de su estado
+docker ps -a
+```
+> Si el comando anterior nos devuelve contenedores, para asegurarnos que no existe ningun conflicto, ejecutamos el siguiente comando:
+
+```
+# Este comando elimina todos los contenedores independientemente de su estado
+docker rm -f $(docker ps -aq)
+```
+> Podemos observar que eliminar los contenedores no implica eliminar las imágenes o los volumenes que hemos creado anteriormente
+
+```
+# Con este comando podemos ver la lista de volúmenes
+docker volume ls
+```
+```
+# Con este comando podemos ver la lista de imágenes
+docker images
+```
 
 ### Paso 1. Instalar docker-compose.
 
