@@ -148,6 +148,9 @@ services:
     container_name: backend
     hostname: backend
     image: josdev27/spring_boot_app
+    environment:
+      - SPRING_PROFILES_ACTIVE=db
+      - DB_URL=db
     ports:
       - 8080:8080
  db:
