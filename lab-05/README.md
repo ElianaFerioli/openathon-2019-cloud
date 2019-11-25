@@ -100,12 +100,16 @@ Para definir la configuración del servicio de backend, debemos tener en cuenta 
 - Nombre del contenedor
 - Hostname
 - Nombre de la imagen
+- Variables de entorno
 - Puerto que expone
 ```
  backend:
     container_name: backend
     hostname: backend
     image: josdev27/spring_boot_app
+    environment:
+      - SPRING_PROFILES_ACTIVE=db
+      - DB_URL=db
     ports:
       - 8080:8080
 ```
