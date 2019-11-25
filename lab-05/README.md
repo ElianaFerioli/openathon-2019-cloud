@@ -226,4 +226,21 @@ docker inspect db
             }
         ]
 ```
+### Resumen.
+En este laboratorio hemos levantado un stack de servicios dockerizados mediante docker-compose. Esta herramienta ha gestionado de manera automática la generación de los contenedores, la creación de una red común (y aislada) para nuestro servicios, el mapeo de puertos y de volúmenes, mediante la definición de un fichero YAML y la utilización de un solo comando.
+Si ejecutamos el siguiente comando, podemos ver como docker-compose elimina los recursos generados:
 
+```
+[node1] (local) root@192.168.0.33 ~/docker-compose
+$ docker-compose down
+Stopping db       ... done
+Stopping backend  ... done
+Stopping frontend ... done
+Removing db       ... done
+Removing backend  ... done
+Removing frontend ... done
+Removing network docker-compose_default
+
+```
+En este log, docker-compose nos esta indicando que esta parando cada uno de los servicios, eliminando cada contenedor y eliminando la red que había creado para levantarlos.
+De esta forma, docker-compose se vuelve una herramienta sumamente útil para aquellas aplicaciones con interdependencias y que necesitan de más servicios para funcionar correctamente.
